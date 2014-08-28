@@ -1,0 +1,7 @@
+/.cache/
+/.tox/
+.project
+.pydevproject
+__pycache__/
+*.egg-info/
+*.pyc
