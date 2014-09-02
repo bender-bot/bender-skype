@@ -26,6 +26,8 @@ class BenderSkype(object):
         for user in _skype.UsersWaitingAuthorization:
             self._on_authorization_request(user)
 
+        print('Connected to %s account.' % _skype.CurrentUserHandle)
+
     @backbone_shutdown
     def shutdown(self):
         del self._skype
@@ -67,6 +69,9 @@ class BenderSkype(object):
 class SkypeMessage(object):
 
     def __init__(self, msg):
+        if isinstance(msg, int):
+            _skype = skype.Skype()
+            msg = _skype.Message(msg)
         self._msg = msg
 
     def get_body(self):
@@ -76,4 +81,7 @@ class SkypeMessage(object):
         self._msg.Chat.SendMessage(message)
 
     def get_sender(self):
-        return self._msg.FromDisplayName
+        return self._msg.FromHandle
+
+    def __reduce__(self):
+        return (self.__class__, (self._msg.Id,))
