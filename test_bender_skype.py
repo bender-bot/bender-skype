@@ -34,14 +34,14 @@ def test_bender_skype(mock_Skype):
     assert on_message_received.called is False
 
     chat_message.Chat.Type = chatTypeDialog
-    chat_message.Body = 'This is my sexy body!'
-    chat_message.FromDisplayName = 'foo'
+    chat_message.Body = 'This is my shiny sexy body!'
+    chat_message.FromHandle = 'foo'
 
     bb._on_message_status(chat_message, cmsReceived)
     on_message_received.assert_called_once_with(ANY)
 
     received_message = on_message_received.call_args[0][0]
-    assert received_message.get_body() == 'This is my sexy body!'
+    assert received_message.get_body() == 'This is my shiny sexy body!'
     assert received_message.get_sender() == 'foo'
 
     received_message.reply('Yey!')
